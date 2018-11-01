@@ -1,22 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import Button from './components/Button';
 
 class Test extends React.Component {
     render() {
         return (
             <div className='container'>
-                <button>hello</button>
+                <Button color='secondary' onClick={() => { console.log('goodbye world'); }} />
             </div>
         );
     }
 }
 
 const root = (
-    <Provider store={createStore()}>
-        <Test />
-    </Provider>
+    <Test />
 );
 
 ReactDOM.render(root, document.getElementById('root'));

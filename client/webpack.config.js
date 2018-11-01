@@ -1,6 +1,7 @@
 const path = require('path');
 
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.js',
@@ -36,11 +37,13 @@ module.exports = {
             inject: true,
             template: './src/static/index.html',
         }),
+        new webpack.HotModuleReplacementPlugin(),
     ],
     devtool: 'source-map',
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         historyApiFallback: true,
         port: 8000,
+        hot: true,
     },
 };
