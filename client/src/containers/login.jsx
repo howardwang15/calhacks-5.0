@@ -13,10 +13,11 @@ class Login extends React.Component {
                 <h1>Welcome to BarelyBears</h1>
                 <GoogleLogin
                     clientId='24294340444-cbkcge063u251lu4sctte6r4a48p9cda.apps.googleusercontent.com'
-                    buttonText='Login with Google'
                     onSuccess={login}
                     onFailure={(response) => { console.log(response); }}
-                />
+                >
+                    Sign in with Google
+                </GoogleLogin>
             </div>
         );
     }
