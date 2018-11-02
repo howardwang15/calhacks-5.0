@@ -63,5 +63,4 @@ For instance, I might do
 ```
 git push origin howard-login-page
 ```
-Then, go to the repo on GitHub, and open a pull request (PR) from the branch you just pushed
-Have someone review the code before merging it into the master branch
+Then, go to the repo on GitHub, and open a pull request (PR) from the branch you just pushed. Have someone review the code before merging it into the master branch
