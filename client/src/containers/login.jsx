@@ -7,6 +7,7 @@ import { loginUser } from '../actions/login';
 import Home from './home';
 import './styles.scss';
 
+
 class Login extends React.Component {
     render() {
         return (
