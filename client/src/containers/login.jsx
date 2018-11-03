@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
@@ -6,21 +6,73 @@ import { loginUser } from '../actions/login';
 import './styles.scss';
 
 class Login extends React.Component {
-    render() {
-        const { login } = this.props;
-        return (
-            <div className='login-container'>
-                <h1>Welcome to BarelyBears</h1>
-                <GoogleLogin
-                    clientId='24294340444-cbkcge063u251lu4sctte6r4a48p9cda.apps.googleusercontent.com'
-                    onSuccess={login}
-                    onFailure={(response) => { console.log(response); }}
-                >
-                    Sign in with Google
-                </GoogleLogin>
-            </div>
-        );
+
+    constructor() {
+        super();
+        this.state = { isAuthenticated: false, use: null, token: ''};
     }
+
+    logout() {
+        this.setState({isAuthenticated: false, token: '', user: null})
+    }
+
+    onFailure(error) {
+      alert(error)
+    }
+
+    googleResponse(response) {
+        const tokenBlob = new Blob([JSON.stringify({access_token: response.accessToken}, null, 2)], {type : 'application/json'});
+        const options = {
+            method: 'POST',
+            body: tokenBlob,
+            mode: 'cors',
+            cache: 'default'
+        };
+        fetch('http://localhost:4000/api/v1/auth/google', options).then(r => {
+            const token = r.headers.get('x-auth-token');
+            r.json().then(user => {
+                if (token) {
+                    this.setState({isAuthenticated: true, user, token})
+                }
+            });
+        })
+    };
+
+    render() {
+        let content = !!this.state.isAuthenticated ?
+            (
+                <div>
+                    <p>Authenticated</p>
+                    <div>
+                        {this.state.user.email}
+                    </div>
+                    <div>
+                        <button onClick={this.logout} className="button">
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            ) :
+            ( 
+              <div className = 'login-container'>
+                  <h1>Athena</h1>
+                  <GoogleLogin
+                            clientId="270824897857-7gidntd5p1b0d53hkh824rf2faps4ufh.apps.googleusercontent.com"
+                            buttonText="Login"
+                            onSuccess={this.googleResponse}
+                            onFailure={this.googleResponse}
+                        />
+                </div>
+            );
+
+            return (
+                <div className="Login"> {
+                      content
+                    }
+                </div>
+            );
+    
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -37,4 +89,4 @@ Login.propTypes = {
     login: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
