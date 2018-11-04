@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import { loginUser } from '../actions/login';
 import './styles.scss';
+import { App } from '../App';
 
 class Login extends React.Component {
 
@@ -56,7 +57,7 @@ class Login extends React.Component {
                     </div>
                 </div>
             ) :
-            ( 
+            (
               <div className = 'login-container'>
                   <h1>Athena</h1>
                   <GoogleLogin
@@ -68,13 +69,15 @@ class Login extends React.Component {
                 </div>
             );
 
-            return (
+            /*return (
                 <div className="Login"> {
                       content
                     }
                 </div>
             );
-    
+            */
+            return (<App/>);
+
   }
 }
 
