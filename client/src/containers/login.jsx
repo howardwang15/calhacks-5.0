@@ -10,6 +10,7 @@ class Login extends React.Component {
     constructor() {
         super();
         this.state = { isAuthenticated: false, use: null, token: ''};
+        this.googleResponse = this.googleResponse.bind(this);
     }
 
     logout() {
@@ -29,6 +30,7 @@ class Login extends React.Component {
             cache: 'default'
         };
         fetch('http://localhost:4000/api/v1/auth/google', options).then(r => {
+            console.log(r.headers, "adfhewfcd");    //Not being reached
             const token = r.headers.get('x-auth-token');
             r.json().then(user => {
                 if (token) {
@@ -36,7 +38,8 @@ class Login extends React.Component {
                 }
             });
         })
-    };
+        console.log(this.state);
+    }
 
     render() {
         let content = !!this.state.isAuthenticated ?
@@ -75,18 +78,18 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-    return { ...state };
-};
+// const mapStateToProps = (state) => {
+//     return { ...state };
+// };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: () => dispatch(loginUser()),
-    };
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         login: () => dispatch(loginUser()),
+//     };
+// };
 
-Login.propTypes = {
-    login: PropTypes.func.isRequired,
-};
+// Login.propTypes = {
+//     login: PropTypes.func.isRequired,
+// };
 
 export default Login;
